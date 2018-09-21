@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"strconv"
 	"strings"
 	"time"
 )
@@ -48,8 +49,26 @@ func wordSpecial(word string, size int, specialArray []string, min int, max int)
 		reverseConcatPassword := value + word
 		checkPasswdSize(concatPassword, min, max)
 		checkPasswdSize(reverseConcatPassword, min, max)
+		for _, value2 := range specialArray {
+			concatPasswordDeep := concatPassword + word + value2
+			checkPasswdSize(concatPasswordDeep, min, max)
+		}
 	}
 
+}
+
+func wordSpecialNum(word string, specialArray []string, min int, max int) {
+	nums := 9999
+	for _, value := range specialArray {
+		for num := 1; num <= nums; num++ {
+			numWordSpecial := strconv.Itoa(num) + word + value
+			reverseNumWordSpecial := value + word + strconv.Itoa(num)
+			middleWordSpecial := word + value + strconv.Itoa(num)
+			checkPasswdSize(numWordSpecial, min, max)
+			checkPasswdSize(reverseNumWordSpecial, min, max)
+			checkPasswdSize(middleWordSpecial, min, max)
+		}
+	}
 }
 
 func main() {
@@ -87,6 +106,7 @@ func main() {
 			for scanner.Scan() {
 				password := scanner.Text()
 				wordSpecial(password, sizeSpecial, SPC, *minimumPwdSize, *maxPwdSize)
+				wordSpecialNum(password, SPC, *minimumPwdSize, *maxPwdSize)
 			}
 		}
 	}
