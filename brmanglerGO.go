@@ -57,6 +57,24 @@ func wordSpecial(word string, size int, specialArray []string, min int, max int)
 
 }
 
+func twoLettrs() {
+	nums := 999999
+	p := make([]byte, 26)
+	p2 := make([]byte, 26)
+	for i := range p {
+		p[i] = 'a' + byte(i)
+		p2[i] = 'b' + byte(i)
+		letter := string(p[i])
+		letter2 := string(p2[i])
+		for i := 1; i <= nums; i++ {
+			twoLet := letter + letter2
+			fmt.Println(twoLet + strconv.Itoa(i))
+			fmt.Println(strconv.Itoa(i) + twoLet)
+		}
+
+	}
+}
+
 func wordSpecialNum(word string, specialArray []string, min int, max int) {
 	nums := 9999
 	for _, value := range specialArray {
@@ -82,7 +100,7 @@ func main() {
 	//calcOutPut := flag.Bool("calc", false, "Calculate the quantity of outputs")
 	//upcase := flag.Bool("upcase", true, "disable uppercase")
 	//dates := flag.Bool("dates", true, "disable dates (password@022102009)")
-	//twoLetters := flag.Bool("twoletters", false, "enable two letters passwords ( af212301031)")
+	twoLetters := flag.Bool("twol", false, "enable two letters passwords ( af212301031)")
 	//insane := flag.Bool("insane", true, "Use *ALL* wordlists to create passwords")
 	flag.Parse()
 
@@ -108,6 +126,10 @@ func main() {
 				wordSpecial(password, sizeSpecial, SPC, *minimumPwdSize, *maxPwdSize)
 				wordSpecialNum(password, SPC, *minimumPwdSize, *maxPwdSize)
 			}
+		}
+
+		if *twoLetters {
+			twoLettrs()
 		}
 	}
 
